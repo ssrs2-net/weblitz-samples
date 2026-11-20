@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Account statement @Format.ShortDate(Data.From) to @Format.ShortDate(Data.To)</title>
+<style>
+@@page { size: A4; margin: 16mm 14mm 18mm; @@top-right { content: "Account statement"; font: 8pt Arial, sans-serif; color: #6b7280; } @@bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8pt Arial, sans-serif; color: #6b7280; } }
+* { box-sizing: border-box; }
+body { margin: 0; font: 9pt/1.4 Arial, sans-serif; color: #111827; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2pt solid #0f3d5e; padding-bottom: 10pt; }
+.bank { font-size: 17pt; font-weight: 700; color: #0f3d5e; }
+.summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8pt; margin: 14pt 0; }
+.summary div { background: #eef4f8; border-radius: 4pt; padding: 8pt; }
+.summary span { display: block; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .06em; color: #4b5563; }
+.summary strong { font-size: 11pt; }
+table { width: 100%; border-collapse: collapse; }
+thead { display: table-header-group; }
+thead th { background: #0f3d5e; color: #fff; text-align: left; padding: 5pt 4pt; font-size: 8pt; font-weight: 600; }
+tbody td { padding: 4pt; border-bottom: .5pt solid #e5e7eb; }
+tbody tr:nth-child(even) td { background: #f9fafb; }
+tr { break-inside: avoid; }
+.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.out { color: #b91c1c; }
+</style>
+</head>
+<body>
+<div class="head">
+  <div><div class="bank">@Data.Bank</div><div>@Data.Holder.Name, @string.Join(", ", Data.Holder.Address)</div></div>
+  <div style="text-align:right">Account @Data.Account<br />@Format.Date(Data.From) to @Format.Date(Data.To)</div>
+</div>
+<div class="summary">
+  <div><span>Opening balance</span><strong>@Format.Money(Data.Opening)</strong></div>
+  <div><span>Money in</span><strong>@Format.Money(Data.Credits)</strong></div>
+  <div><span>Money out</span><strong>@Format.Money(Data.Debits)</strong></div>
+  <div><span>Closing balance</span><strong>@Format.Money(Data.Closing) @Data.Currency</strong></div>
+</div>
+<table>
+  <thead><tr><th>Date</th><th>Description</th><th class="num">Out</th><th class="num">In</th><th class="num">Balance</th></tr></thead>
+  <tbody>
+    @{ var balance = Data.Opening; }
+    @foreach (var t in Data.Transactions)
+    {
+      balance += t.Amount;
+      <tr>
+        <td>@Format.ShortDate(t.Date)</td>
+        <td>@t.Description</td>
+        <td class="num out">@(t.Amount < 0 ? Format.Money(-t.Amount) : "")</td>
+        <td class="num">@(t.Amount > 0 ? Format.Money(t.Amount) : "")</td>
+        <td class="num">@Format.Money(balance)</td>
+      </tr>
+    }
+  </tbody>
+</table>
+</body>
+</html>
+
+@code {
+    [Parameter, EditorRequired] public StatementData Data { get; set; } = null!;
+}

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- A Blazor (Razor) component served as a PDF: GET /orders/1042.pdf renders the OrderSummary component with
+       ASP.NET Core's HtmlRenderer and prints its HTML with Weblitz, in the web application's own process. -->
+  <PropertyGroup>
+    <RootNamespace>WeblitzPdf.Samples.BlazorComponentToPdf</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WeblitzPdf" Version="$(WeblitzPdfVersion)" />
+  </ItemGroup>
+
+</Project>

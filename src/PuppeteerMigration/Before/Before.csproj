@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Before: HTML to PDF with PuppeteerSharp, which drives Chrome. Built, not run, by the tests (it downloads a browser). -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WeblitzPdf.Samples.PuppeteerMigration.Before</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PuppeteerSharp" Version="25.15.0" />
+    <None Include="..\invoice.html" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

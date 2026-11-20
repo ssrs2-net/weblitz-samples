@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Receipt @Data.Number</title>
+<style>
+@@page { size: 80mm 170mm; margin: 6mm 5mm; }
+body { margin: 0; font: 8.5pt/1.4 "Courier New", monospace; color: #000; }
+h1 { margin: 0; font-size: 12pt; text-align: center; letter-spacing: .05em; }
+.center { text-align: center; }
+hr { border: 0; border-top: 1pt dashed #000; margin: 6pt 0; }
+table { width: 100%; border-collapse: collapse; }
+td { padding: 1pt 0; vertical-align: top; }
+td.num { text-align: right; white-space: nowrap; }
+.total td { font-size: 11pt; font-weight: 700; padding-top: 4pt; }
+.thanks { margin-top: 10pt; text-align: center; font-weight: 700; }
+</style>
+</head>
+<body>
+<h1>@Data.Store</h1>
+<div class="center">@string.Join(", ", Data.StoreAddress)</div>
+<hr />
+<div>Receipt @Data.Number<br />@Data.At.ToString("dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture)</div>
+<hr />
+<table>
+  @foreach (var item in Data.Items)
+  {
+    <tr><td>@item.Quantity.ToString("0", CultureInfo.InvariantCulture) × @item.Description</td><td class="num">@Format.Money(item.Amount)</td></tr>
+  }
+</table>
+<hr />
+<table>
+  <tr class="total"><td>TOTAL @Data.Currency</td><td class="num">@Format.Money(Data.Total)</td></tr>
+  <tr><td>incl. VAT @((Data.TaxRate * 100).ToString("0.0", CultureInfo.InvariantCulture))%</td><td class="num">@Format.Money(Data.TaxIncluded)</td></tr>
+  <tr><td colspan="2">@Data.PaidWith</td></tr>
+</table>
+<hr />
+<div class="thanks">Thank you, see you soon!</div>
+</body>
+</html>
+
+@code {
+    [Parameter, EditorRequired] public ReceiptData Data { get; set; } = null!;
+}

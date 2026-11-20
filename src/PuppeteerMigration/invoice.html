@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Invoice 2026-0412</title>
+<style>
+  body { font: 11pt/1.5 Arial, sans-serif; color: #111827; margin: 0; }
+  header { display: flex; justify-content: space-between; border-bottom: 2pt solid #111827; padding-bottom: 8pt; }
+  h1 { margin: 0; font-size: 20pt; }
+  table { width: 100%; border-collapse: collapse; margin-top: 16pt; }
+  th, td { padding: 6pt 4pt; border-bottom: .5pt solid #d1d5db; text-align: left; }
+  td.num, th.num { text-align: right; }
+  .total { font-weight: 700; font-size: 13pt; }
+  .badge { background: #111827; color: #fff; padding: 2pt 8pt; border-radius: 99px; font-size: 9pt; }
+</style>
+</head>
+<body>
+<header><div><h1>Northwind Studio</h1>Rue du Rhône 12, 1204 Geneva</div><div>Invoice <strong>2026-0412</strong><br><span class="badge">DUE 20 DEC 2026</span></div></header>
+<table>
+  <thead><tr><th>Description</th><th class="num">Amount (CHF)</th></tr></thead>
+  <tbody>
+    <tr><td>Discovery workshop (2 days)</td><td class="num">3,600.00</td></tr>
+    <tr><td>Design system</td><td class="num">6,400.00</td></tr>
+    <tr><td>Invoice and statement templates</td><td class="num">2,250.00</td></tr>
+    <tr><td class="total">Total</td><td class="num total">12,250.00</td></tr>
+  </tbody>
+</table>
+<p id="note"></p>
+<script>document.getElementById('note').textContent = 'Printed ' + new Date(2026, 10, 20).toDateString() + '.';</script>
+</body>
+</html>

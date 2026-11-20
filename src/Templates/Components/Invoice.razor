@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Invoice @Data.Number</title>
+<style>
+@@page { size: A4; margin: 18mm 16mm 20mm; @@bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8.5pt Arial, sans-serif; color: #6b7280; } }
+* { box-sizing: border-box; }
+body { margin: 0; font: 10pt/1.45 "Segoe UI", Arial, sans-serif; color: #111827; }
+header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 14pt; border-bottom: 2pt solid #0b1020; }
+.brand { display: flex; gap: 10pt; align-items: center; }
+.mark { width: 34pt; height: 34pt; border-radius: 8pt; background: linear-gradient(135deg, #ff5a1f, #ffb020); }
+.brand h1 { margin: 0; font-size: 15pt; }
+.muted { color: #6b7280; }
+.title { text-align: right; }
+.title h2 { margin: 0; font-size: 22pt; letter-spacing: .04em; text-transform: uppercase; }
+.parties { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16pt; margin: 18pt 0; }
+.parties h3 { margin: 0 0 4pt; font-size: 8pt; text-transform: uppercase; letter-spacing: .08em; color: #6b7280; }
+table { width: 100%; border-collapse: collapse; }
+thead th { text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: .06em; color: #6b7280; border-bottom: 1pt solid #d1d5db; padding: 6pt 4pt; }
+tbody td { padding: 7pt 4pt; border-bottom: .5pt solid #e5e7eb; vertical-align: top; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+tbody tr { break-inside: avoid; }
+.totals { margin-left: auto; width: 46%; margin-top: 12pt; }
+.totals td { padding: 4pt; }
+.totals tr.grand td { font-size: 13pt; font-weight: 700; border-top: 1.5pt solid #0b1020; padding-top: 8pt; }
+.pay { margin-top: 24pt; padding: 12pt; background: #f3f4f6; border-radius: 6pt; break-inside: avoid; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="mark"></div>
+    <div><h1>@Data.Seller.Name</h1><div class="muted">@string.Join(", ", Data.Seller.Address)</div></div>
+  </div>
+  <div class="title"><h2>Invoice</h2><div>No. <strong>@Data.Number</strong></div></div>
+</header>
+<section class="parties">
+  <div>
+    <h3>Bill to</h3>
+    <strong>@Data.Buyer.Name</strong>
+    @foreach (var line in Data.Buyer.Address)
+    {
+      <br />@line
+    }
+  </div>
+  <div><h3>Dates</h3>Issued @Format.Date(Data.Date)<br />Due @Format.Date(Data.Due)</div>
+  <div><h3>From</h3>@Data.Seller.Email<br />@Data.Seller.TaxNumber</div>
+</section>
+<table>
+  <thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Unit price</th><th class="num">Amount (@Data.Currency)</th></tr></thead>
+  <tbody>
+    @foreach (var line in Data.Lines)
+    {
+      <tr><td>@line.Description</td><td class="num">@line.Quantity.ToString("0.##", CultureInfo.InvariantCulture)</td><td class="num">@Format.Money(line.UnitPrice)</td><td class="num">@Format.Money(line.Amount)</td></tr>
+    }
+  </tbody>
+</table>
+<table class="totals">
+  <tr><td>Subtotal</td><td class="num">@Format.Money(Data.Subtotal)</td></tr>
+  <tr><td>VAT @((Data.TaxRate * 100).ToString("0.0", CultureInfo.InvariantCulture))%</td><td class="num">@Format.Money(Data.Tax)</td></tr>
+  <tr class="grand"><td>Total @Data.Currency</td><td class="num">@Format.Money(Data.Total)</td></tr>
+</table>
+<div class="pay"><strong>Payment</strong><br />IBAN @Data.Iban. @Data.Note</div>
+</body>
+</html>
+
+@code {
+    [Parameter, EditorRequired] public InvoiceData Data { get; set; } = null!;
+}

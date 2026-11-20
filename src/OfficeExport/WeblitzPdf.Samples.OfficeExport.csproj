@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- One HTML page as a PDF, an Excel workbook, a Word document and a PowerPoint deck: dotnet run writes them to out/. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WeblitzPdf.Samples.OfficeExport</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WeblitzPdf" Version="$(WeblitzPdfVersion)" />
+    <None Include="report.html" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

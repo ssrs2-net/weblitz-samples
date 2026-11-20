@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Shipping label @Data.Tracking</title>
+<style>
+@@page { size: 4in 6in; margin: 0; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 9pt/1.3 Arial, sans-serif; color: #000; }
+.label { width: 4in; height: 6in; padding: .12in; display: grid; grid-template-rows: auto 1fr auto auto auto; gap: .08in; }
+.box { border: 1.5pt solid #000; padding: .08in; }
+.from { font-size: 8pt; }
+.from b, .to b { display: block; font-size: 7pt; letter-spacing: .1em; }
+.to { font-size: 13pt; line-height: 1.25; }
+.to .name { font-size: 15pt; font-weight: 700; }
+.service { display: flex; justify-content: space-between; align-items: center; background: #000; color: #fff; padding: .06in .1in; font-weight: 700; }
+.service .big { font-size: 22pt; letter-spacing: .04em; }
+.tracking { text-align: center; }
+.tracking .number { font: 700 13pt "Courier New", monospace; letter-spacing: .12em; margin-top: .04in; }
+.meta { display: grid; grid-template-columns: 1fr 1fr; gap: .04in .1in; font-size: 8pt; }
+</style>
+</head>
+<body>
+<div class="label">
+  <div class="box from"><b>FROM</b>@Data.From.Name, @string.Join(", ", Data.From.Address)</div>
+  <div class="box to">
+    <b>SHIP TO</b>
+    <div class="name">@Data.To.Name</div>
+    @foreach (var line in Data.To.Address)
+    {
+      <div>@line</div>
+    }
+  </div>
+  <div class="service"><span>@Data.Carrier</span><span class="big">@Data.Service</span></div>
+  <div class="box tracking">
+    @((MarkupString)Code39.Svg(Data.Tracking, 80))
+    <div class="number">@Data.Tracking</div>
+  </div>
+  <div class="box meta">
+    <div>Weight: @Data.WeightKg.ToString("0.0", CultureInfo.InvariantCulture) kg</div>
+    <div>Shipped: @Format.ShortDate(Data.Shipped)</div>
+    <div style="grid-column: span 2">Ref: @Data.Reference</div>
+  </div>
+</div>
+</body>
+</html>
+
+@code {
+    [Parameter, EditorRequired] public ShippingLabelData Data { get; set; } = null!;
+}

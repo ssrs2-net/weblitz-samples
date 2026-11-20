@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>@Data.Title: @Data.Recipient</title>
+<style>
+@@page { size: A4 landscape; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { font-family: Georgia, "Times New Roman", serif; color: #1f2937; background: #fffdf7; }
+.frame { position: absolute; inset: 12mm; border: 3pt double #9a7b2f; padding: 16mm 22mm; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.issuer { font: 600 10pt Arial, sans-serif; letter-spacing: .3em; text-transform: uppercase; color: #9a7b2f; }
+h1 { margin: 10mm 0 4mm; font-size: 34pt; font-weight: 400; letter-spacing: .02em; }
+.to { font-size: 12pt; color: #6b7280; }
+.name { margin: 4mm 0; font-size: 30pt; font-style: italic; color: #0b1020; border-bottom: 1pt solid #d6c79a; padding: 0 12mm 2mm; }
+.what { max-width: 190mm; font-size: 13pt; line-height: 1.5; }
+.foot { margin-top: auto; width: 100%; display: flex; justify-content: space-between; align-items: flex-end; }
+.sign { width: 70mm; border-top: 1pt solid #1f2937; padding-top: 2mm; font: 9pt Arial, sans-serif; }
+.seal { width: 30mm; height: 30mm; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f3d98b, #b8892c); box-shadow: 0 0 0 2mm #fffdf7, 0 0 0 2.6mm #b8892c; display: flex; align-items: center; justify-content: center; font: 700 7pt Arial, sans-serif; color: #5c4210; letter-spacing: .1em; }
+.id { font: 8pt Arial, sans-serif; color: #6b7280; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="issuer">@Data.Issuer</div>
+  <h1>@Data.Title</h1>
+  <div class="to">This certifies that</div>
+  <div class="name">@Data.Recipient</div>
+  <div class="what">@Data.Achievement.</div>
+  <div class="foot">
+    <div class="sign">@Data.Signatory<br />@Data.SignatoryRole</div>
+    <div class="seal">AWARDED</div>
+    <div class="sign" style="text-align:right">@Format.Date(Data.Date)<br /><span class="id">No. @Data.Id</span></div>
+  </div>
+</div>
+</body>
+</html>
+
+@code {
+    [Parameter, EditorRequired] public CertificateData Data { get; set; } = null!;
+}

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- After: the same HTML and options with Weblitz, in the application's own process. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WeblitzPdf.Samples.PuppeteerMigration.After</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WeblitzPdf" Version="$(WeblitzPdfVersion)" />
+    <None Include="..\invoice.html" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

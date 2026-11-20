@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Order @Order.Id</title>
+<style>
+@@page { size: A4; margin: 20mm; }
+body { margin: 0; font: 10.5pt/1.5 Arial, sans-serif; color: #111827; }
+h1 { margin: 0 0 2mm; font-size: 20pt; }
+.status { display: inline-block; padding: 1mm 3mm; border-radius: 99px; background: #dcfce7; color: #166534; font-weight: 700; font-size: 9pt; }
+table { width: 100%; border-collapse: collapse; margin-top: 8mm; }
+th { text-align: left; border-bottom: 1pt solid #9ca3af; padding: 2mm; font-size: 9pt; color: #4b5563; }
+td { border-bottom: .5pt solid #e5e7eb; padding: 2mm; }
+.num { text-align: right; }
+tfoot td { font-weight: 700; border-bottom: 0; }
+</style>
+</head>
+<body>
+<h1>Order @Order.Id</h1>
+<div>@Order.Customer · placed @Order.Placed.ToString("d MMMM yyyy", CultureInfo.InvariantCulture) · <span class="status">@Order.Status</span></div>
+<table>
+  <thead><tr><th>SKU</th><th>Item</th><th class="num">Qty</th><th class="num">Price</th><th class="num">Amount</th></tr></thead>
+  <tbody>
+    @foreach (var item in Order.Items)
+    {
+      <tr><td>@item.Sku</td><td>@item.Name</td><td class="num">@item.Quantity</td><td class="num">@item.Price.ToString("#,##0.00", CultureInfo.InvariantCulture)</td><td class="num">@item.Amount.ToString("#,##0.00", CultureInfo.InvariantCulture)</td></tr>
+    }
+  </tbody>
+  <tfoot><tr><td colspan="4">Total (EUR)</td><td class="num">@Order.Total.ToString("#,##0.00", CultureInfo.InvariantCulture)</td></tr></tfoot>
+</table>
+</body>
+</html>
+
+@code {
+    [Parameter, EditorRequired] public Order Order { get; set; } = null!;
+}

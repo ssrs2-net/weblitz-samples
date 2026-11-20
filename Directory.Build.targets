@@ -1,0 +1,3 @@
+<Project>
+  <!-- Nothing: it keeps a repository's own Directory.Build.targets away from the samples. -->
+</Project>

@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BlazorComponentToPdf/">
+    <Project Path="src/BlazorComponentToPdf/WeblitzPdf.Samples.BlazorComponentToPdf.csproj" />
+  </Folder>
+  <Folder Name="/src/OfficeExport/">
+    <Project Path="src/OfficeExport/WeblitzPdf.Samples.OfficeExport.csproj" />
+  </Folder>
+  <Folder Name="/src/PuppeteerMigration/">
+    <Project Path="src/PuppeteerMigration/After/After.csproj" />
+    <Project Path="src/PuppeteerMigration/Before/Before.csproj" />
+  </Folder>
+  <Folder Name="/src/Templates/">
+    <Project Path="src/Templates/WeblitzPdf.Samples.Templates.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WeblitzPdf.Samples.Tests/WeblitzPdf.Samples.Tests.csproj" />
+  </Folder>
+</Solution>

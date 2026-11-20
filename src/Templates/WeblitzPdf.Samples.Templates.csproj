@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <!-- Documents as Razor components (an invoice, a receipt, a bank statement, a certificate, a shipping label), rendered to
+       HTML by ASP.NET Core's HtmlRenderer, then printed to PDF by Weblitz. dotnet run writes them to out/. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WeblitzPdf.Samples.Templates</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="WeblitzPdf" Version="$(WeblitzPdfVersion)" />
+  </ItemGroup>
+
+</Project>
