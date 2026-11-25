@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
-    <WeblitzPdfVersion>2.0.0-beta.9</WeblitzPdfVersion>
+    <WeblitzPdfVersion>2.0.0-rc.1</WeblitzPdfVersion>
     <!-- The package carries the script engine for every platform: built for the machine's own (or the one you publish
          for, dotnet publish -r linux-x64), an application takes one, about a ninth of it. SamplesPortable=true builds for
          all of them. (The SDK names its own platform only after this file is read: the machine's is worked out here;
